@@ -10,7 +10,10 @@ http://www.carbondesignsystem.com/components/tabs/code
 <cv-tabs>
   <cv-tab id="tabs-1" label="Tab link 1"> Sample tab panel content 1 </cv-tab>
   <cv-tab id="tabs-2" label="Tab link 2"> Sample tab panel content 2 </cv-tab>
-  <cv-tab id="tabs-3" label="Tab link 3"> Sample tab panel content 3 </cv-tab>
+  <cv-tab id="tabs-3">
+    <template #label><strike>Tab link 3</strike></template>
+    Sample tab panel content 3
+  </cv-tab>
   <cv-tab id="tabs-4" label="Tab link 4"> Sample tab panel content 4 </cv-tab>
   <cv-tab id="tabs-5" label="Tab link 5"> Sample tab panel content 5 </cv-tab>
 </cv-tabs>
@@ -34,6 +37,7 @@ container: Boolean - content appears contained
 ### Slots
 
 - default: Location for tab content
+- label: alternative slot for tab label (in place of label proprerty)
 
 ### Attributes - cv-tab
 

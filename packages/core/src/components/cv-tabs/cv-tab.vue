@@ -10,6 +10,9 @@
     <slot>
       <!-- Content for first tab goes here. -->
     </slot>
+    <span class="custom_wrapper" v-show="false">
+      <slot name="label"></slot>
+    </span>
   </div>
 </template>
 
@@ -22,7 +25,7 @@ export default {
   props: {
     selected: Boolean,
     disabled: Boolean,
-    label: { type: String, required: true },
+    label: { type: String, default: '' },
   },
   data() {
     return {
@@ -60,6 +63,10 @@ export default {
     this.$_CvTab = true; // for use by parent with $children
 
     this.$parent.$emit('cv:mounted', this);
+
+    if (!this.label && !this.$slots.label) {
+      throw new Error('label prop or label slot must be provided');
+    }
   },
   beforeDestroy() {
     this.$parent.$emit('cv:beforeDestroy', this);

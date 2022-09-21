@@ -1,5 +1,5 @@
 <template>
-  <div class="cv-tabs" ref="tabs" style="width: 100%;">
+  <div class="cv-tabs" ref="tabs" style="width: 100%">
     <div
       data-tabs
       :class="[`cv-tab ${carbonPrefix}--tabs--scrollable`, { [`${carbonPrefix}--tabs--container`]: container }]"
@@ -46,6 +46,7 @@
           role="presentation"
         >
           <button
+            v-if="tab.label || renderSlot(tab)"
             :class="`${carbonPrefix}--tabs--scrollable__nav-link`"
             role="tab"
             :aria-controls="tab.uid"
@@ -54,14 +55,13 @@
             :id="`${tab.uid}-link`"
             @click="onTabClick(tab.uid)"
             ref="link"
+            v-html="tab.label || renderSlot(tab)"
             eslint-disable-next-line
             :tabindex="
               // eslint-disable-nextx-line
               selectedId == tab.uid ? 0 : -1
             "
-          >
-            {{ tab.label }}
-          </button>
+          ></button>
         </li>
       </ul>
 
@@ -397,12 +397,14 @@ export default {
     },
     leftEdgeReached(direction) {
       const { scrollLeft } = this.$refs.tablist;
-
       return direction === -1 && scrollLeft <= this.OVERFLOW_BUTTON_OFFSET;
     },
     rightEdgeReached(direction) {
       const { clientWidth, scrollLeft, scrollWidth } = this.$refs.tablist;
       return direction === 1 && scrollLeft + clientWidth >= scrollWidth;
+    },
+    renderSlot(slot) {
+      return slot.$el.getElementsByClassName('custom_wrapper')[0].innerHTML;
     },
   },
 };
